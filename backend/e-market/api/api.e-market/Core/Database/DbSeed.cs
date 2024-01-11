@@ -1,12 +1,16 @@
 ﻿using domain.e_market.Queries;
 using Microsoft.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace api.e_market.Core.Database;
 
 public class DbSeed
 {
-    public static void AddDatabase(string connection)
+    internal static void AddDatabase(string connection)
         => CreateDataBase(connection);
+
+    internal static void AddTables(string connection)
+        => CreateTables(connection);
 
     private static void CreateDataBase(string connection)
     {
@@ -17,8 +21,6 @@ public class DbSeed
         myConn.Open();
         myCommand.ExecuteNonQuery();
         myConn.Close();
-
-        CreateTables(connection);
     }
 
     private static void CreateTables(string connection)
@@ -32,14 +34,4 @@ public class DbSeed
         myConn.Close();
     }
 
-    public static void InitialSeed(string connection)
-    {
-        var myConn = new SqlConnection(connection);
-
-        SqlCommand myCommand = new SqlCommand(Queries.InitialSeed(), myConn);
-
-        myConn.Open();
-        myCommand.ExecuteNonQuery();
-        myConn.Close();
-    }
 }

@@ -11,6 +11,9 @@ public static class Utilities
     public static JObject ToJson(this string json)
         => JObject.Parse(json);
 
+    public static bool ToBool(this string? strBool)
+        => Convert.ToBoolean(strBool);
+
     public static string GetErrorMessage(this JObject json)
         => json["error"]["message"].ToString();
 }

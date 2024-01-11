@@ -18,6 +18,7 @@ BEGIN
             Id INT IDENTITY(1,1) PRIMARY KEY,
             Description NVARCHAR(255) NOT NULL,
             Quantity INT NOT NULL,
+            ProductId INT,
             FOREIGN KEY (ProductId) REFERENCES Product(Id),
             UNIQUE (ProductId)
         )

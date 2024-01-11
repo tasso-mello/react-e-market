@@ -66,14 +66,6 @@ namespace domain.e_market.Properties {
         ///IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = &apos;E-Market&apos;)
         ///BEGIN
         ///    CREATE DATABASE [E-Market]
-        ///END
-        ///
-        ///
-        ///IF NOT EXISTS (SELECT 1 FROM sys.server_principals WHERE name = &apos;e-market&apos;)
-        ///BEGIN
-        ///    CREATE LOGIN [e-market] WITH PASSWORD=N&apos;jZBMGg+XwNSlPkPeqH7XMR/RzpCYeilPG4DnbojPmtI=&apos;, DEFAULT_DATABASE=[master], CHECK_EXPIRATION=ON, CHECK_POLICY=ON
-        ///    ALTER LOGIN [e-market] DISABLE
-        ///    ALTER SERVER ROLE [sysadmin] ADD MEMBER [e-market]
         ///END.
         /// </summary>
         internal static string CreateDatabase {
@@ -102,15 +94,6 @@ namespace domain.e_market.Properties {
         internal static string CreateTables {
             get {
                 return ResourceManager.GetString("CreateTables", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string InitialSeed {
-            get {
-                return ResourceManager.GetString("InitialSeed", resourceCulture);
             }
         }
     }
