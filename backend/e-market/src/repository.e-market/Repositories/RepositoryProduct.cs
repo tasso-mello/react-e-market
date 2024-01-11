@@ -4,9 +4,9 @@ using repository.e_market.Infrastructure;
 
 namespace repository.e_market.Repositories;
 
-public interface IProductRepository : IRepository<Product> { }
+public interface IRepositoryProduct : IRepository<Product> { }
 
-public class ProductRepository : Repository<Product>, IProductRepository
+public class RepositoryProduct : Repository<Product>, IRepositoryProduct
 {
-    public ProductRepository(ApplicationDbContext dbContext) : base(dbContext) { }
+    public RepositoryProduct(ApplicationDbContext dbContext) : base(dbContext) { }
 }

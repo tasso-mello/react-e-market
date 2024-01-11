@@ -2,6 +2,9 @@
 using core.e_market.Contracts;
 using domain.e_market.Extensions;
 using domain.e_market.Models;
+using entities.e_market;
+using repository.e_market.Repositories;
+using System.Linq.Expressions;
 
 namespace core.e_market.Implementation
 {
@@ -15,34 +18,43 @@ namespace core.e_market.Implementation
             this.repositoryProduct = repositoryProduct;
         }
 
-        public Task<string> Delete(int id)
+
+        public async Task<string> Get(int id)
+            => Responses.GetResponse("product", (await repositoryProduct.ReadOne(a => a.Id == id)).ToModelProduct());
+
+        public async Task<string> Get(int skip, int take)
+            => Responses.GetResponse("product", (await repositoryProduct.Read()).Select(a => a.ToModelProduct()));
+
+        public async Task<string> Get(string filter, int skip, int take)
+            => Responses.GetResponse("product", (await repositoryProduct.Read(GetFilter(filter))).Select(a => a.ToModelProduct()));
+
+        public async Task<string> Post(MProduct model)
         {
-            throw new NotImplementedException();
+            var entityProduct = model.ToEntityProduct();
+            var productCreated = await repositoryProduct.Create(entityProduct);
+
+            return Responses.GetCreatedResponse("product", productCreated.Id, "Product created.");
         }
 
-        public Task<string> Get(int id)
+        public async Task<string> Put(MProduct model)
         {
-            throw new NotImplementedException();
+            var entityProduct = model.ToEntityProduct();
+            var productUpdated = await repositoryProduct.Update(entityProduct);
+
+            return Responses.GetCreatedResponse("product", productUpdated.Id, "Product updated.");
         }
 
-        public Task<string> Get(int skip, int take)
+        public async Task<string> Delete(int id)
         {
-            throw new NotImplementedException();
+            await repositoryProduct.Delete(id);
+
+            return Responses.GetObjectResponse("product", "Product deleted.");
         }
 
-        public Task<string> Get(string filter, int skip, int take)
-        {
-            throw new NotImplementedException();
-        }
+        private Expression<Func<Product, bool>> GetFilter(string filter)
+            => p => p.Name.Contains(filter);
 
-        public Task<string> Post(MProduct model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> Put(MProduct model)
-        {
-            throw new NotImplementedException();
-        }
+        private List<string> GetIncludes()
+            => new List<string> { "AssociadoEmpresas", "AssociadoEmpresas.Empresa" };
     }
 }

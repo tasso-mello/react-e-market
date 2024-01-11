@@ -4,9 +4,9 @@ using repository.e_market.Infrastructure;
 
 namespace repository.e_market.Repositories;
 
-public interface IStockRepository : IRepository<Stock> { }
+public interface IRepositoryStock : IRepository<Stock> { }
 
-public class StockRepository : Repository<Stock>, IStockRepository
+public class RepositoryStock : Repository<Stock>, IRepositoryStock
 {
-    public StockRepository(ApplicationDbContext dbContext) : base(dbContext) { }
+    public RepositoryStock(ApplicationDbContext dbContext) : base(dbContext) { }
 }
