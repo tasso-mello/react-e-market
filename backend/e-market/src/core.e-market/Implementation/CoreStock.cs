@@ -25,7 +25,7 @@ namespace core.e_market.Implementation
             => Responses.GetResponse("stock", (await repositoryStock.Read(GetIncludes())).Select(a => a.ToModelStock()));
 
         public async Task<string> Get(string filter, int skip, int take)
-            => Responses.GetResponse("stock", (await repositoryStock.Read(GetFilter(filter), GetIncludes())).Select(a => a.ToModelStock()));
+            => throw new NotImplementedException("Stock cannot be search by text");
 
         public async Task<string> Post(MStock model)
         {
@@ -49,9 +49,6 @@ namespace core.e_market.Implementation
 
             return Responses.GetObjectResponse("stock", "Stock deleted.");
         }
-
-        private Expression<Func<Stock, bool>> GetFilter(string filter)
-            => p => p.Description.Contains(filter);
 
         private List<string> GetIncludes()
             => new List<string> { "Products" };

@@ -18,7 +18,6 @@ namespace core.e_market.Implementation
             this.repositoryProduct = repositoryProduct;
         }
 
-
         public async Task<string> Get(int id)
             => Responses.GetResponse("product", (await repositoryProduct.ReadOne(a => a.Id == id)).ToModelProduct());
 

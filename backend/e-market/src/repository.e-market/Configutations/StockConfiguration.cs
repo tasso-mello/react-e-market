@@ -13,7 +13,6 @@ namespace repository.e_market.Configutations
             builder.Property(p => p.Quantity).IsRequired();
             builder.Property(p => p.ProductId).IsRequired();
             builder.HasIndex(p => p.ProductId).IsUnique();
-
         }
     }
 }

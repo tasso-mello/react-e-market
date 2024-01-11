@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.e_market.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class ProductController : BaseController, IBaseController<MProduct>
     {
         private readonly ICoreProduct coreProduct;

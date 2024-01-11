@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.Data.SqlClient;
     using System.Net;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
@@ -23,7 +24,7 @@
                 context.Result = new JsonResult(
                     new
                     {
-                        type = "NullReferenceException",
+                        type = "Null Value",
                         error = new
                         {
                             message = context.Exception.InnerException?.Message ?? context.Exception.Message,
@@ -38,7 +39,22 @@
                 context.Result = new JsonResult(
                     new
                     {
-                        type = "NotImplementedException",
+                        type = "Not implemented.",
+                        error = new
+                        {
+                            message = context.Exception.InnerException?.Message ?? context.Exception.Message,
+                        }
+                    }
+                );
+            }
+            else if (context.Exception is SqlException)
+            {
+                context.HttpContext.Response.ContentType = "application/json";
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                context.Result = new JsonResult(
+                    new
+                    {
+                        type = "SQL Error",
                         error = new
                         {
                             message = context.Exception.InnerException?.Message ?? context.Exception.Message,
@@ -53,7 +69,7 @@
                 context.Result = new JsonResult(
                     new
                     {
-                        type = "Exception",
+                        type = "Application Error.",
                         error = new
                         {
                             message = context.Exception.InnerException?.Message ?? context.Exception.Message,

@@ -24,9 +24,17 @@ namespace api.e_market.Controllers
         public async Task<IActionResult> Get(int skip = 1, int take = 10)
             => await ToResponseAsync(await coreStock.Get(skip, take), Request.Method);
 
+        /// <summary>
+        ///     This method cannot be search by text
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         [HttpGet("{filter}/filter")]
         public async Task<IActionResult> Get(string filter, int skip = 1, int take = 10)
-            => await ToResponseAsync(await coreStock.Get(filter, skip, take), Request.Method);
+            => throw new NotImplementedException("Stock cannot be search by text");
 
         [HttpPost]
         public async Task<IActionResult> Post(MStock jsonObject)
