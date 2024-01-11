@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\domain.e-market\domain.e-market.csproj" />
+    <ProjectReference Include="..\repository.e-market\repository.e-market.csproj" />
+  </ItemGroup>
+
 </Project>

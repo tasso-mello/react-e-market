@@ -15,4 +15,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\core.e-market\core.e-market.csproj" />
+    <ProjectReference Include="..\..\src\domain.e-market\domain.e-market.csproj" />
+  </ItemGroup>
+
 </Project>
