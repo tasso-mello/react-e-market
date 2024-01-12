@@ -8,7 +8,7 @@
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
         
         public DbSet<Product> Products { get; set; }
-        public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Stock> Stock { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

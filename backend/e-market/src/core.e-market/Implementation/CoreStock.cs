@@ -51,6 +51,6 @@ namespace core.e_market.Implementation
         }
 
         private List<string> GetIncludes()
-            => new List<string> { "Products" };
+            => new List<string> { "Product" };
     }
 }
