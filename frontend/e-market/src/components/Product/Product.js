@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import ProductModal from './ProductModal';
+import { getProductById } from '../../services/productService';
 
 const Product = ({ product }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productName, setProductName] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productId, setProductId] = useState('');
 
   const tableStyle = {
     width: '100%',
@@ -32,22 +38,30 @@ const Product = ({ product }) => {
     },
   };
 
+  const editProduct = async (id) => {
+    const product = await getProductById(id);
+    setProductId(id);
+    setProductName(product.product.Name);
+    setProductPrice(product.product.Price);
+
+    openModal();
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
-      <table style={tableStyle}>
-        <thead>
-          <tr>
-            <th style={thStyle}>Product Name</th>
-            <th style={thStyle}>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id={product.Id} style={thTdStyle}>
-            <td>{product.Name}</td>
-            <td>{product.Price}</td>
-          </tr>
-        </tbody>
-      </table>
+      <tr onDoubleClick={() => editProduct(product.Id)} style={thTdStyle}>
+        <td>{product.Name}</td>
+        <td>{product.Price}</td>
+      </tr>
+      <ProductModal isOpen={isModalOpen} onRequestClose={closeModal} initialProductName={productName} initialProductPrice={productPrice} initialProductId={productId} />
     </div>
   );
 };

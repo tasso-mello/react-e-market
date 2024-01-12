@@ -21,7 +21,7 @@ public interface IRepository<T> where T : class
     Task<bool> Exists(Expression<Func<T, bool>> where);
     Task<T> Update(T entity);
     Task Update(IEnumerable<T> entity);
-    Task Delete(long id);
+    Task Delete(int id);
     Task Delete(T entity);
     Task Delete(Expression<Func<T, bool>> where);
 }
@@ -131,7 +131,7 @@ public class Repository<T> : IRepository<T> where T : class
         _dbSet.AttachRange(entity);
         await _dbContext.SaveChangesAsync();
     }
-    public virtual async Task Delete(long id)
+    public virtual async Task Delete(int id)
     {
         _dbSet.Remove(await _dbSet.FindAsync(id));
         await _dbContext.SaveChangesAsync();

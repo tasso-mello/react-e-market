@@ -8,6 +8,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<StockPage />} />
         <Route path="/products" element={<ProductPage />} />
         <Route path="/stocks" element={<StockPage />} />
       </Routes>
