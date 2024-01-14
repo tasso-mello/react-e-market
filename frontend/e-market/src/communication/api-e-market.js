@@ -1,22 +1,35 @@
-const baseUrl = "https://localhost:7180/";
+import config from '../config';
+
+const { baseUrl } = config;
 
 export const get = async (url) => {
-  const response = await fetch(baseUrl + url);
-  return response.json();
+  try {
+    const response = await fetch(baseUrl + url);
+    return response.json();
+  } catch (error) {
+    console.error('Erro ao fazer a requisição:', error);
+    throw error;
+  }
 };
 
 export const post = async (url, data) => {
-  const response = await fetch(baseUrl + url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  return response.json();
+  try {
+    const response = await fetch(baseUrl + url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  } catch (error) {
+    console.error('Erro ao fazer a requisição:', error);
+    throw error;
+  }
 };
 
 export const put = async (url, data) => {
+  try {
     const response = await fetch(baseUrl + url, {
       method: "PUT",
       headers: {
@@ -25,11 +38,20 @@ export const put = async (url, data) => {
       body: JSON.stringify(data),
     });
     return response.json();
+  } catch (error) {
+    console.error('Erro ao fazer a requisição:', error);
+    throw error;
+  }
 };
 
 export const remove = async (url, data) => {
+  try {
     const response = await fetch(baseUrl + url, {
       method: "DELETE",
     });
     return response.json();
+  } catch (error) {
+    console.error('Erro ao fazer a requisição:', error);
+    throw error;
+  }
 };

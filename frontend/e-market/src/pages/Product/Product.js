@@ -4,7 +4,7 @@ import ProductList from '../../components/Product/ProductList';
 const ProductPage = () => {
   return (
     <div>
-      <h1>Product</h1>
+      <h1 className='text-center pb-5'>Product</h1>
       <ProductList />
     </div>
   );
