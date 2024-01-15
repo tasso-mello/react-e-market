@@ -24,7 +24,11 @@ public static class Conversions
         => mapper.Map<MStock>(stock);
 
     public static Stock ToEntityStock(this MStock stock)
-        => mapper.Map<Stock>(stock);
+    {
+        var entityStock = mapper.Map<Stock>(stock);
+        entityStock.Product = null;
+        return entityStock;
+    }
 
     #endregion Stock
 }

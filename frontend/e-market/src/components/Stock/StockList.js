@@ -56,11 +56,11 @@ const StockList = () => {
 
   return (
     <Container>
-      {/* <Row className='mb-5'>
+      <Row className='mb-5'>
         <Col>
           <Button className="btn-secondary" onClick={handleShow}>Add on Stock</Button>
         </Col>
-      </Row> */}
+      </Row>
       <Row className='mt-5'>
         <Col>
           <Table>
