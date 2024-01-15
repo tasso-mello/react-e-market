@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
 import { postProduct, putProduct, deleteProduct } from '../../services/productService';
 import ProductModel from '../../models/ProductModel';
+import { Row, Button, Modal } from 'react-bootstrap';
 
 const ProductModal = ({ isOpen, onRequestClose, initialProductName, initialProductPrice, initialProductId }) => {
     const [productName, setProductName] = useState(initialProductName || '');
@@ -9,51 +9,62 @@ const ProductModal = ({ isOpen, onRequestClose, initialProductName, initialProdu
     const [productId, setProductId] = useState(initialProductId || '');
 
     useEffect(() => {
-        // Atualiza os estados locais quando as propriedades iniciais mudam
         setProductName(initialProductName || '');
         setProductPrice(initialProductPrice || '');
         setProductId(initialProductId || '');
-    }, [initialProductName, initialProductPrice]);
+    }, [initialProductName, initialProductPrice, initialProductId]);
 
     const saveProduct = async () => {
-        if(!productId){
+        if (!productId) {
             const newProduct = new ProductModel(productName, parseFloat(productPrice), 'Any description to save on database.')
-            const savedProduct = await postProduct(newProduct);
+            await postProduct(newProduct);
         }
-        else{
+        else {
             const editProduct = new ProductModel(productName, parseFloat(productPrice), 'Any description to edit on database.', productId)
-            const editedProduct = await putProduct(editProduct);
+            await putProduct(editProduct);
         }
+
+        onRequestClose();
     };
 
-    const removeProduct = async() => {
-        if(productId){
-            const deletedProduct = await deleteProduct(productId);
-        }
+    const removeProduct = async () => {
+        if (productId)
+            await deleteProduct(productId);
+
+        onRequestClose();
     };
 
     return (
         <div>
-            <Modal
-                isOpen={isOpen}
-                onRequestClose={onRequestClose}
-                contentLabel="Add new product"
-            >
-                <h2>New Product</h2>
-                <form>
-                    <label>
-                        Name:
-                        <input type="text" value={productName} onChange={(e) => setProductName(e.target.value)} />
-                    </label>
-                    <label>
-                        Price:
-                        <input type="number" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} />
-                    </label>
-                    <button onClick={saveProduct} type="submit">Save</button>
-                    <button onClick={removeProduct} type="submit">Delete</button>
-                </form>
-
-                <button onClick={onRequestClose}>Close</button>
+            <Modal show={isOpen} onHide={onRequestClose} centered>
+                <Modal.Header closeButton>
+                {productId && (
+                    <Modal.Title>{productId ? 'Edit Product' : 'New Product'}</Modal.Title>
+                )}
+                </Modal.Header>
+                <Modal.Body>
+                    <Row>
+                        <label>
+                            Name:
+                            <input className='form-control' type="text" value={productName} onChange={(e) => setProductName(e.target.value)} />
+                        </label>
+                    </Row>
+                    <Row>
+                        <label>
+                            Price:
+                            <input className='form-control' type="number" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} />
+                        </label>
+                    </Row>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={onRequestClose}>
+                        Close
+                    </Button>
+                    <Button onClick={saveProduct} variant="primary">Save</Button>
+                    {productId && (
+                        <Button onClick={removeProduct} variant="danger">Delete</Button>
+                    )}
+                </Modal.Footer>
             </Modal>
         </div>
     );

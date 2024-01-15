@@ -12,23 +12,22 @@ function Dashboard() {
       <Row className='mt-5'>
         <Col>
           <Card border="secondary" style={{ maxWidth: '18rem' }}>
-            <Card.Header><Link className='text-secondary' to="/product">Produtos</Link></Card.Header>
+            <Card.Header><Link className='text-secondary' to="/product">Products</Link></Card.Header>
             <Card.Body className="text-secondary">
-              <Card.Title>Primary card title</Card.Title>
+              <Card.Title>Product CRUD</Card.Title>
               <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                To create, read, update, delete
               </Card.Text>
             </Card.Body>
           </Card>
         </Col>
-
         <Col>
           <Card border="secondary" style={{ maxWidth: '18rem' }}>
           <Card.Header><Link className='text-secondary' to="/stock">Stock</Link></Card.Header>
             <Card.Body className="text-secondary">
-              <Card.Title>Secondary card title</Card.Title>
+              <Card.Title>Stock list</Card.Title>
               <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                To see the status of each item
               </Card.Text>
             </Card.Body>
           </Card>

@@ -1,78 +1,93 @@
-// import React, { useEffect, useState } from 'react';
-// import { getStocks } from '../../services/StockService';
-// import Stock from './Stock';
-// import StockModal from './StockModal';
+import React, { useEffect, useState } from 'react';
+import { getStocks, getStockById } from '../../services/stockService';
+import StockModal from './StockModal';
+import { Container, Row, Col, Button, Table } from 'react-bootstrap';
+import { TableHead, TableRow } from '@mui/material';
+import ProductModel from '../../models/ProductModel';
 
-// const StockList = () => {
-//   const [Stocks, setStocks] = useState([]);
-//   const [isModalOpen, setIsModalOpen] = useState(false);
+const StockList = () => {
+  const [stocks, setStocks] = useState([]);
+  const [show, setShow] = useState(false);
+  const [stockProduct, setStockProduct] = useState(new ProductModel());
+  const [stockProductQuantity, setStockProductQuantity] = useState(0);
+  const [StockId, setStockId] = useState('');
 
-//   useEffect(() => {
-//     const fetchStocks = async () => {
-//       const result = await getStocks();
-//       setStocks(result.Stock);
-//     };
+  useEffect(() => {
+    const fetchStocks = async () => {
+      try {
+        const result = await getStocks();
+        setStocks(result.stock);
+      } catch (error) {
+        console.error('Get produtcs is not working. Try again:', error);
+      }
+    };
 
-//     fetchStocks();
-//   }, []);
+    fetchStocks();
+  }, []);
 
-//   const tableStyle = {
-//     width: '100%',
-//     borderCollapse: 'collapse',
-//     marginBottom: '20px',
-//   };
+  const updateStockList = async () => {
+    try {
+      const result = await getStocks();
+      setStocks(result.stock);
+    } catch (error) {
+      console.error('Get Stocks is not working. Try again:', error);
+    }
+  };
 
-//   const thTdStyle = {
-//     padding: '12px',
-//     textAlign: 'left',
-//     borderBottom: '1px solid #ddd',
-//   };
+  const editStock = async (id) => {
+    const Stock = await getStockById(id);
+    setStockId(id);
+    setStockProduct(Stock.stock.Product);
+    setStockProductQuantity(Stock.stock.Quantity);
 
-//   const thStyle = {
-//     ...thTdStyle,
-//     backgroundColor: '#f2f2f2',
-//   };
+    handleShow();
+  };
 
-//   const responsiveStyle = {
-//     '@media (max-width: 600px)': {
-//       th: {
-//         display: 'block',
-//         width: '100%',
-//       },
-//       td: {
-//         display: 'block',
-//         width: '100%',
-//       },
-//     },
-//   };
+  const handleClose = () => {
+    updateStockList();
+    setStockId('');
+    setStockProduct(new ProductModel());
+    setStockProductQuantity(0);  
 
-//   const openModal = () => {
-//     setIsModalOpen(true);
-//   };
+    setShow(false);
+  }
 
-//   const closeModal = () => {
-//     setIsModalOpen(false);
-//   };
+  const handleShow = () => setShow(true);
 
-//   return (
-//     <div>
-//       <button onClick={openModal}>New Stock</button>
-//       <table style={tableStyle}>
-//         <thead>
-//           <tr>
-//             <th style={thStyle}>Stock Name</th>
-//             <th style={thStyle}>Price</th>
-//           </tr>
-//         </thead>
-//         <tbody style={tableStyle}>
-//           {Stocks.map((Stock) => (
-//             <Stock key={Stock.id} Stock={Stock} />
-//           ))}
-//         </tbody>
-//       </table>
-//       <StockModal isOpen={isModalOpen} onRequestClose={closeModal} />
-//     </div>
-//   );
-// };
+  return (
+    <Container>
+      {/* <Row className='mb-5'>
+        <Col>
+          <Button className="btn-secondary" onClick={handleShow}>Add on Stock</Button>
+        </Col>
+      </Row> */}
+      <Row className='mt-5'>
+        <Col>
+          <Table>
+            <TableHead className="thead-dark">
+              <TableRow>
+                <th>Product Name</th>
+                <th>Quantity</th>
+              </TableRow>
+            </TableHead>
+            <tbody>
+              {stocks.map((Stock) => (
+                <tr key={Stock.Id} onDoubleClick={() => editStock(Stock.Id)}>
+                  <td>
+                    {Stock.Product.Name}
+                  </td>
+                  <td>
+                    {Stock.Quantity}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+      <StockModal isOpen={show} onRequestClose={handleClose} initialStockProduct={stockProduct} initialStockQuantity={stockProductQuantity} initialStockId={StockId} />
+    </Container>
+  );
+};
 
-// export default StockList;
+export default StockList;
