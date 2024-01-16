@@ -4,6 +4,7 @@ import StockModal from './StockModal';
 import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import { TableHead, TableRow } from '@mui/material';
 import ProductModel from '../../models/ProductModel';
+import { Link } from 'react-router-dom';
 
 const StockList = () => {
   const [stocks, setStocks] = useState([]);
@@ -58,7 +59,10 @@ const StockList = () => {
     <Container>
       <Row className='mb-5'>
         <Col>
-          <Button className="btn-secondary" onClick={handleShow}>Add on Stock</Button>
+          <Link className="btn btn-secondary" to="/">Home</Link>
+        </Col>
+        <Col className='col-2'>
+          <Button className="btn-secondary right" onClick={handleShow}>Add on Stock</Button>
         </Col>
       </Row>
       <Row className='mt-5'>

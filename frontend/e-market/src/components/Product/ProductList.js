@@ -3,6 +3,7 @@ import { getProducts, getProductById } from '../../services/productService';
 import ProductModal from './ProductModal';
 import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import { TableHead, TableRow } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -46,7 +47,7 @@ const ProductList = () => {
     updateProductList();
     setProductId('');
     setProductName('');
-    setProductPrice('');  
+    setProductPrice('');
 
     setShow(false);
   }
@@ -57,7 +58,10 @@ const ProductList = () => {
     <Container>
       <Row className='mb-5'>
         <Col>
-          <Button className="btn-secondary" onClick={handleShow}>New product</Button>
+          <Link className="btn btn-secondary" to="/">Home</Link>
+        </Col>
+        <Col className='col-2'>
+          <Button className="btn-secondary right" onClick={handleShow}>New product</Button>
         </Col>
       </Row>
       <Row className='mt-5'>
